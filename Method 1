@@ -1,0 +1,39 @@
+#include <stdio.h>
+#include <stdbool.h>
+#include <string.h>
+
+
+bool check(char *str1, char * str2) ;// declaration of the check() function
+int main() 
+{ 
+    char str1[100] = "prep***ta",str2[100] = "prepinsta";
+    printf("First  string with wild characters : ");
+    puts(str1);
+    printf("Second string without wild characters : ");
+    puts(str2);
+    check(str1,str2);
+    return 0; 
+}
+bool check(char *str1, char * str2) 
+{ 
+    // checking end of both the strings 
+    if (*str1 == '\0' && *str2 == '\0') 
+         return true; 
+  
+    // comparing the characters of both the strings and wild characters(*)
+    if (*str1 == '*' && *(str1+1) != '\0' && *str2 == '\0') 
+         return false;
+  
+    // checking wild characters(?)
+    if (*str1 == '?' || *str1 == *str2) 
+         return check(str1+1, str2+1); 
+    
+    if (*str1 == '*') 
+         return check(str1+1, str2) || check(str1, str2+1); 
+     return false; 
+} 
+
+void test(char *str1, char *str2) 
+{ 
+    check(str1, str2)? puts(" Yes "): puts(" No "); 
+}
